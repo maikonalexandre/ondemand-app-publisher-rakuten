@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Box, Heading, Text, Badge, Button, Spinner, VStack, HStack, useToast } from '@chakra-ui/react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import { getErrorMessage } from '../utils/errorUtils'; // Importa a função auxiliar
 
 const ReviewService = () => {
   const { id } = useParams();
@@ -39,7 +40,7 @@ const ReviewService = () => {
       console.error('Erro ao aprovar serviço:', error);
       toast({
         title: 'Erro ao aprovar serviço',
-        description: error.response?.data?.error || 'Tente novamente mais tarde.',
+        description: getErrorMessage(error) || 'Tente novamente mais tarde.',
         status: 'error',
         duration: 3000,
         isClosable: true,
@@ -61,7 +62,7 @@ const ReviewService = () => {
       console.error('Erro ao recusar serviço:', error);
       toast({
         title: 'Erro ao recusar serviço',
-        description: error.response?.data?.error || 'Tente novamente mais tarde.',
+        description: getErrorMessage(error) || 'Tente novamente mais tarde.',
         status: 'error',
         duration: 3000,
         isClosable: true,

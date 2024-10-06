@@ -17,6 +17,7 @@ import * as Yup from "yup";
 import { login as loginService } from "../services/authService";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { getErrorMessage } from "../utils/errorUtils"; // Importa a função auxiliar
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("E-mail inválido").required("E-mail é obrigatório"),
@@ -48,7 +49,8 @@ const Login = () => {
             login(token, usuario);
             navigate("/dashboard");
           } catch (error) {
-            actions.setFieldError("general", error.response?.data?.error || "Erro ao fazer login");
+            const errorMessage = getErrorMessage(error) || "Erro ao fazer login";
+            actions.setFieldError("general", errorMessage);
           }
           actions.setSubmitting(false);
         }}

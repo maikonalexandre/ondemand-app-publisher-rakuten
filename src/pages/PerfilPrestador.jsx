@@ -4,6 +4,7 @@ import { Box, Heading, Spinner } from "@chakra-ui/react";
 
 import PrestadorForm from "../components/Form/PrestadorForm";
 import { useAuth } from "../contexts/AuthContext";
+import { getErrorMessage } from "../utils/errorUtils"; // Importa a função auxiliar
 
 const PerfilPrestador = () => {
   const { usuario, loading } = useAuth();
@@ -13,7 +14,7 @@ const PerfilPrestador = () => {
       <Box textAlign="center" mt={10}>
         <Spinner size="xl" />
       </Box>
-    );
+    ); // Exibir um spinner enquanto carrega
   }
 
   return (

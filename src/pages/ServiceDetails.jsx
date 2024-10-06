@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Box, Heading, Text, Badge, Button, Spinner, VStack } from '@chakra-ui/react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import { getErrorMessage } from '../utils/errorUtils'; // Importa a função auxiliar
 
 const ServiceDetails = () => {
   const { id } = useParams();

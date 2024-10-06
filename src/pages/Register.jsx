@@ -1,5 +1,4 @@
 // src/pages/Register.jsx
-
 import React from "react";
 import { Formik, Form, Field } from "formik";
 import {
@@ -17,6 +16,7 @@ import * as Yup from "yup";
 import { register } from "../services/authService";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { getErrorMessage } from "../utils/errorUtils"; // Importa a função auxiliar
 
 const RegisterSchema = Yup.object().shape({
   nome: Yup.string().required("Nome é obrigatório"),
@@ -55,7 +55,7 @@ const Register = () => {
           } catch (error) {
             actions.setFieldError(
               "general",
-              error.response?.data?.error || "Erro ao registrar usuário"
+              getErrorMessage(error) || "Erro ao registrar usuário"
             );
           }
           actions.setSubmitting(false);

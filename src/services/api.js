@@ -6,6 +6,11 @@ const api = axios.create({
   timeout: 10000,
 });
 
+// Função auxiliar para verificar se a requisição é para autenticação
+const isAuthRequest = (url) => {
+  return url.includes("/auth/login") || url.includes("/auth/registrar-usuario");
+};
+
 // Interceptador para incluir o token em todas as requisições
 api.interceptors.request.use(
   (config) => {
@@ -25,10 +30,14 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
-      // Token inválido ou expirado
-      // Implementar lógica para logout automático
-      localStorage.removeItem("token");
-      window.location.href = "/"; // Redireciona para login
+      const originalRequest = error.config;
+      if (!isAuthRequest(originalRequest.url)) {
+        // Apenas realizar logout/redirecionamento se a requisição NÃO for de autenticação
+        localStorage.removeItem("token");
+        localStorage.removeItem("usuario");
+        window.location.href = "/"; // Redireciona para login
+      }
+      // Se for uma requisição de autenticação, não faz nada aqui
     }
     return Promise.reject(error);
   }
