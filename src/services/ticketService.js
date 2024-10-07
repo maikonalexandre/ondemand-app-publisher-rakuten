@@ -1,12 +1,9 @@
 // src/services/ticketService.js
 import api from './api';
 
-export const createTicket = (data) => {
-  return api.post('/tickets', data);
-};
-
 export const getAllTickets = () => {
-  return api.get('/tickets');
+  const prestador = JSON.parse(localStorage.getItem("prestador"));
+  return api.get(`/tickets/prestador/${prestador._id}`);
 };
 
 export const getTicketById = (id) => {

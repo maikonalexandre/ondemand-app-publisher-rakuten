@@ -14,19 +14,31 @@ export const AuthContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const usuario = localStorage.getItem("usuario");
-    const prestador = localStorage.getItem("prestador");
+    const initializeAuth = async () => {
+      const token = localStorage.getItem("token");
+      const usuarioData = localStorage.getItem("usuario");
 
-    if (token && usuario) {
-      setUsuario(JSON.parse(usuario));
-      setPrestador(JSON.parse(prestador));
-      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-      setLoading(false);
-    } else {
-      console.log("Nenhum token encontrado.");
-      setLoading(false);
-    }
+      if (token && usuarioData) {
+        try {
+          const parsedUsuario = JSON.parse(usuarioData);
+          setUsuario(parsedUsuario);
+          api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+          const prestadorData = await getPrestadorByUsuarioId(parsedUsuario._id);
+          localStorage.setItem("prestador", JSON.stringify(prestadorData.data));
+          setPrestador(prestadorData.data);
+        } catch (error) {
+          console.error("Erro ao inicializar a autenticação:", error);
+        } finally {
+          setLoading(false);
+        }
+      } else {
+        console.log("Nenhum token encontrado.");
+        setLoading(false);
+      }
+    };
+
+    initializeAuth();
   }, []);
 
   const login = async (token, usuario) => {
@@ -34,12 +46,13 @@ export const AuthContextProvider = ({ children }) => {
     localStorage.setItem("usuario", JSON.stringify(usuario));
     setUsuario(usuario);
     api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    
+
     try {
       const prestadorData = await getPrestadorByUsuarioId(usuario._id);
-      console.log("Dados do Prestador:", prestadorData);
-      localStorage.setItem("prestador", JSON.stringify(prestadorData));
-      setPrestador(prestadorData);
+      const prestador = prestadorData.data;
+      console.log("Dados do Prestador:", prestador);
+      localStorage.setItem("prestador", JSON.stringify(prestador));
+      setPrestador(prestador);
     } catch (error) {
       console.error("Erro ao buscar dados do Prestador:", error);
       localStorage.removeItem("prestador");
