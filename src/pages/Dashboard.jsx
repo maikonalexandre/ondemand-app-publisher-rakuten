@@ -21,8 +21,6 @@ import ServiceCard from "../components/Cards/ServiceCard";
 import { useAuth } from "../contexts/AuthContext";
 
 const Dashboard = () => {
-  console.log("Dashboard");
-
   const { prestador, loading: authLoading } = useAuth(); // Obtendo 'prestador' e 'loading' do contexto
   const [loading, setLoading] = useState(true); // Estado para carregar dados do Dashboard
   const [tickets, setTickets] = useState([]);
@@ -45,23 +43,23 @@ const Dashboard = () => {
 
     const fetchData = async () => {
       try {
-        const ticketsResponse = await api.get("/tickets");
-        setTickets(ticketsResponse.data);
+        // const ticketsResponse = await api.get("/tickets/prestador/" + prestador._id);
+        // setTickets(ticketsResponse.data);
 
-        // Calcular métricas
-        const totalTickets = ticketsResponse.data.length;
-        const activeTickets = ticketsResponse.data.filter(
-          (ticket) => ticket.status === "ativo"
-        ).length;
-        const archivedTickets = ticketsResponse.data.filter(
-          (ticket) => ticket.status === "arquivado"
-        ).length;
-        const servicesCount = ticketsResponse.data.reduce(
-          (acc, ticket) => acc + (ticket.servico ? 1 : 0),
-          0
-        );
+        // // Calcular métricas
+        // const totalTickets = ticketsResponse.data.length;
+        // const activeTickets = ticketsResponse.data.filter(
+        //   (ticket) => ticket.status === "ativo"
+        // ).length;
+        // const archivedTickets = ticketsResponse.data.filter(
+        //   (ticket) => ticket.status === "arquivado"
+        // ).length;
+        // const servicesCount = ticketsResponse.data.reduce(
+        //   (acc, ticket) => acc + (ticket.servico ? 1 : 0),
+        //   0
+        // );
 
-        setMetrics({ totalTickets, activeTickets, archivedTickets, servicesCount });
+        // setMetrics({ totalTickets, activeTickets, archivedTickets, servicesCount });
       } catch (error) {
         console.error("Erro ao buscar dados do dashboard:", error);
       }

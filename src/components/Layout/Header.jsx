@@ -1,7 +1,6 @@
 // src/components/Layout/Header.jsx
 import React from 'react';
 import {
-  Box,
   Flex,
   IconButton,
   Text,
