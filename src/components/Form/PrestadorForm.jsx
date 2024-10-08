@@ -84,7 +84,8 @@ const PrestadorForm = () => {
     try {
       if (prestador) {
         const response = await updatePrestador(prestador._id, values);
-        setPrestador(response.data);
+        setPrestador(response);
+        localStorage.setItem('prestador', JSON.stringify(response));
         toast({
           title: 'Prestador atualizado com sucesso.',
           status: 'success',
@@ -93,7 +94,8 @@ const PrestadorForm = () => {
         });
       } else {
         const response = await createPrestador(values);
-        setPrestador(response.data);
+        setPrestador(response);
+        localStorage.setItem('prestador', JSON.stringify(response));
         toast({
           title: 'Prestador cadastrado com sucesso.',
           status: 'success',
@@ -130,15 +132,6 @@ const PrestadorForm = () => {
       {({ isSubmitting, values, errors, touched, setFieldValue, validateForm }) => (
         <Form>
           <VStack spacing={6} align="stretch">
-            {/* Comentários de Revisão */}
-            {prestador?.status == "pendente-de-revisao" && prestador?.comentariosRevisao && step === 1 && (
-              <Box p={4} bg="yellow.100" borderRadius="md">
-                <Text fontSize="sm" color="yellow.800">
-                  <strong>Comentários de Revisão:</strong> {prestador.comentariosRevisao}
-                </Text>
-              </Box>
-            )}
-
             {/* Barra de Progresso */}
             <Progress value={(step / 5) * 100} size="sm" colorScheme="teal" />
 

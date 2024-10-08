@@ -15,6 +15,8 @@ export const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     const initializeAuth = async () => {
+      console.log("Inicializando autenticação...");
+
       const token = localStorage.getItem("token");
       const usuarioData = localStorage.getItem("usuario");
 
@@ -24,9 +26,9 @@ export const AuthContextProvider = ({ children }) => {
           setUsuario(parsedUsuario);
           api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-          const prestadorData = await getPrestadorByUsuarioId(parsedUsuario._id);
-          localStorage.setItem("prestador", JSON.stringify(prestadorData.data));
-          setPrestador(prestadorData.data);
+          const prestador = await getPrestadorByUsuarioId(parsedUsuario._id);
+          localStorage.setItem("prestador", JSON.stringify(prestador));
+          setPrestador(prestador);
         } catch (error) {
           console.error("Erro ao inicializar a autenticação:", error);
         } finally {
@@ -48,8 +50,7 @@ export const AuthContextProvider = ({ children }) => {
     api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
     try {
-      const prestadorData = await getPrestadorByUsuarioId(usuario._id);
-      const prestador = prestadorData.data;
+      const prestador = await getPrestadorByUsuarioId(usuario._id);
       console.log("Dados do Prestador:", prestador);
       localStorage.setItem("prestador", JSON.stringify(prestador));
       setPrestador(prestador);
