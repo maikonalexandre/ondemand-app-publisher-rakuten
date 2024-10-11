@@ -1,4 +1,3 @@
-// src/pages/Dashboard.jsx
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -21,8 +20,8 @@ import ServiceCard from "../components/Cards/ServiceCard";
 import { useAuth } from "../contexts/AuthContext";
 
 const Dashboard = () => {
-  const { prestador, loading: authLoading } = useAuth(); // Obtendo 'prestador' e 'loading' do contexto
-  const [loading, setLoading] = useState(true); // Estado para carregar dados do Dashboard
+  const { prestador, loading: authLoading } = useAuth();
+  const [loading, setLoading] = useState(true); 
   const [tickets, setTickets] = useState([]);
   const [metrics, setMetrics] = useState({
     totalTickets: 0,
@@ -43,9 +42,9 @@ const Dashboard = () => {
 
     const fetchData = async () => {
       try {
-        console.log("Buscando dados do Dashboard...");
-        console.log("Prestador:", prestador);
-        console.log("Prestador:", prestador._id);
+        // console.log("Buscando dados do Dashboard...");
+        // console.log("Prestador:", prestador);
+        // console.log("Prestador:", prestador._id);
         if (prestador) {
           const ticketsResponse = await api.get("/tickets/prestador/" + prestador._id);
           setTickets(ticketsResponse.data);

@@ -8,5 +8,5 @@ export const createServico = (servicoData) => {
     valor: servicoData.valor,
     prestador: prestador._id,
   };
-  return api.post("/servicos", servico);
+  return api.post("/servicos/adicionar-e-criar-ticket", servico);
 };

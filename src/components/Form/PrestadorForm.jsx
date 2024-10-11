@@ -1,5 +1,5 @@
 // src/components/Form/PrestadorForm.jsx
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Box,
   VStack,
@@ -15,16 +15,17 @@ import {
   Progress,
   Checkbox,
   Text,
-} from '@chakra-ui/react';
-import { Formik, Form, Field } from 'formik';
-import { getValidationSchema } from './validationSchemas'; // Importando o schema
-import EnderecoForm from './EnderecoForm';
-import DadosBancariosForm from './DadosBancariosForm';
-import PessoaFisicaForm from './PessoaFisicaForm';
-import PessoaJuridicaForm from './PessoaJuridicaForm';
-import { createPrestador, updatePrestador } from '../../services/prestadorService';
-import { useAuth } from '../../contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+} from "@chakra-ui/react";
+import { Formik, Form, Field, getIn } from "formik";
+import { getValidationSchema } from "./validationSchemas"; // Importando o schema
+import EnderecoForm from "./EnderecoForm";
+import DadosBancariosForm from "./DadosBancariosForm";
+import PessoaFisicaForm from "./PessoaFisicaForm";
+import PessoaJuridicaForm from "./PessoaJuridicaForm";
+import { createPrestador, updatePrestador } from "../../services/prestadorService";
+import { useAuth } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
+import DadosCadastrais from "./prestador/dadosPessoaisForm";
 
 const PrestadorForm = () => {
   const { usuario, prestador, setPrestador, loading: authLoading } = useAuth();
@@ -42,38 +43,38 @@ const PrestadorForm = () => {
 
   // Definição dos valores iniciais dentro do componente
   const initialValues = {
-    usuario: usuario?._id || '',
-    nome: prestador?.nome || '',
-    tipo: prestador?.tipo || 'pf',
-    documento: prestador?.documento || '',
-    email: prestador?.email || '',
+    usuario: usuario?._id || "",
+    nome: prestador?.nome || "",
+    tipo: prestador?.tipo || "pf",
+    documento: prestador?.documento || "",
+    email: prestador?.email || "",
     endereco: {
-      rua: prestador?.endereco?.rua || '',
-      numero: prestador?.endereco?.numero || '',
-      complemento: prestador?.endereco?.complemento || '',
-      cidade: prestador?.endereco?.cidade || '',
-      estado: prestador?.endereco?.estado || '',
-      cep: prestador?.endereco?.cep || '',
+      rua: prestador?.endereco?.rua || "",
+      numero: prestador?.endereco?.numero || "",
+      complemento: prestador?.endereco?.complemento || "",
+      cidade: prestador?.endereco?.cidade || "",
+      estado: prestador?.endereco?.estado || "",
+      cep: prestador?.endereco?.cep || "",
     },
     dadosBancarios: {
-      banco: prestador?.dadosBancarios?.banco || '',
-      agencia: prestador?.dadosBancarios?.agencia || '',
-      conta: prestador?.dadosBancarios?.conta || '',
-      tipoConta: prestador?.dadosBancarios?.tipoConta || '',
+      banco: prestador?.dadosBancarios?.banco || "",
+      agencia: prestador?.dadosBancarios?.agencia || "",
+      conta: prestador?.dadosBancarios?.conta || "",
+      tipoConta: prestador?.dadosBancarios?.tipoConta || "",
     },
     pessoaFisica: {
-      dataNascimento: prestador?.pessoaFisica?.dataNascimento || '',
-      pis: prestador?.pessoaFisica?.pis || '',
-      nomeMae: prestador?.pessoaFisica?.nomeMae || '',
+      dataNascimento: prestador?.pessoaFisica?.dataNascimento || "",
+      pis: prestador?.pessoaFisica?.pis || "",
+      nomeMae: prestador?.pessoaFisica?.nomeMae || "",
     },
     pessoaJuridica: {
-      nomeEmpresa: prestador?.pessoaJuridica?.nomeEmpresa || '',
-      codCNAE: prestador?.pessoaJuridica?.codCNAE || '',
-      nomeCNAE: prestador?.pessoaJuridica?.nomeCNAE || '',
-      codServicoNacional: prestador?.pessoaJuridica?.codServicoNacional || '',
-      regimeTributario: prestador?.pessoaJuridica?.regimeTributario || '',
+      nomeEmpresa: prestador?.pessoaJuridica?.nomeEmpresa || "",
+      codCNAE: prestador?.pessoaJuridica?.codCNAE || "",
+      nomeCNAE: prestador?.pessoaJuridica?.nomeCNAE || "",
+      codServicoNacional: prestador?.pessoaJuridica?.codServicoNacional || "",
+      regimeTributario: prestador?.pessoaJuridica?.regimeTributario || "",
     },
-    comentariosRevisao: prestador?.comentariosRevisao || '', // Novo campo para comentários de revisão
+    comentariosRevisao: prestador?.comentariosRevisao || "", // Novo campo para comentários de revisão
     confirmacao: false, // Campo para confirmação dos dados
   };
 
@@ -85,32 +86,32 @@ const PrestadorForm = () => {
       if (prestador) {
         const response = await updatePrestador(prestador._id, values);
         setPrestador(response);
-        localStorage.setItem('prestador', JSON.stringify(response));
+        localStorage.setItem("prestador", JSON.stringify(response));
         toast({
-          title: 'Prestador atualizado com sucesso.',
-          status: 'success',
+          title: "Prestador atualizado com sucesso.",
+          status: "success",
           duration: 3000,
           isClosable: true,
         });
       } else {
         const response = await createPrestador(values);
         setPrestador(response);
-        localStorage.setItem('prestador', JSON.stringify(response));
+        localStorage.setItem("prestador", JSON.stringify(response));
         toast({
-          title: 'Prestador cadastrado com sucesso.',
-          status: 'success',
+          title: "Prestador cadastrado com sucesso.",
+          status: "success",
           duration: 3000,
           isClosable: true,
         });
       }
-      navigate('/dashboard'); // Redirecionar para o Dashboard após a submissão bem-sucedida
+      navigate("/dashboard"); // Redirecionar para o Dashboard após a submissão bem-sucedida
     } catch (error) {
       const errorMessage =
-        error.response?.data?.error || 'Houve um problema ao cadastrar o prestador.';
+        error.response?.data?.error || "Houve um problema ao cadastrar o prestador.";
       toast({
-        title: 'Erro.',
+        title: "Erro.",
         description: errorMessage,
-        status: 'error',
+        status: "error",
         duration: 5000,
         isClosable: true,
       });
@@ -129,70 +130,14 @@ const PrestadorForm = () => {
       onSubmit={handleSubmit}
       enableReinitialize={true}
     >
-      {({ isSubmitting, values, errors, touched, setFieldValue, validateForm }) => (
+      {(formik) => (
         <Form>
           <VStack spacing={6} align="stretch">
             {/* Barra de Progresso */}
             <Progress value={(step / 5) * 100} size="sm" colorScheme="teal" />
 
             {/* Etapas do Formulário */}
-            {step === 1 && (
-              <Box>
-                <Heading size="md" mb={4}>
-                  Dados Pessoais
-                </Heading>
-                {/* Nome */}
-                <FormControl isInvalid={errors.nome && touched.nome} mb={4}>
-                  <FormLabel htmlFor="nome">Nome</FormLabel>
-                  <Field as={Input} id="nome" name="nome" placeholder="Nome Completo" />
-                  <FormErrorMessage>{errors.nome}</FormErrorMessage>
-                </FormControl>
-
-                {/* Tipo */}
-                <FormControl isInvalid={errors.tipo && touched.tipo} mb={4}>
-                  <FormLabel htmlFor="tipo">Tipo</FormLabel>
-                  <Field
-                    as={Select}
-                    id="tipo"
-                    name="tipo"
-                    onChange={(e) => {
-                      const selectedTipo = e.target.value;
-                      setFieldValue('tipo', selectedTipo);
-                      // Resetar campos condicionais ao mudar o tipo
-                      if (selectedTipo === 'pf') {
-                        setFieldValue('pessoaJuridica', initialValues.pessoaJuridica);
-                      } else {
-                        setFieldValue('pessoaFisica', initialValues.pessoaFisica);
-                      }
-                    }}
-                  >
-                    <option value="pf">Pessoa Física</option>
-                    <option value="pj">Pessoa Jurídica</option>
-                  </Field>
-                  <FormErrorMessage>{errors.tipo}</FormErrorMessage>
-                </FormControl>
-
-                {/* Documento */}
-                <FormControl isInvalid={errors.documento && touched.documento} mb={4}>
-                  <FormLabel htmlFor="documento">Documento (CPF/CNPJ)</FormLabel>
-                  <Field
-                    as={Input}
-                    id="documento"
-                    name="documento"
-                    placeholder="CPF ou CNPJ"
-                    maxLength={values.tipo === 'pf' ? 11 : 14}
-                  />
-                  <FormErrorMessage>{errors.documento}</FormErrorMessage>
-                </FormControl>
-
-                {/* Email */}
-                <FormControl isInvalid={errors.email && touched.email} mb={4}>
-                  <FormLabel htmlFor="email">E-mail</FormLabel>
-                  <Field as={Input} id="email" name="email" type="email" placeholder="E-mail" />
-                  <FormErrorMessage>{errors.email}</FormErrorMessage>
-                </FormControl>
-              </Box>
-            )}
+            {step === 1 && <DadosCadastrais />}
 
             {step === 2 && (
               <Box>
@@ -215,9 +160,11 @@ const PrestadorForm = () => {
             {step === 4 && (
               <Box>
                 <Heading size="md" mb={4}>
-                  {values.tipo === 'pf' ? 'Dados da Pessoa Física' : 'Dados da Pessoa Jurídica'}
+                  {formik.values.tipo === "pf"
+                    ? "Dados da Pessoa Física"
+                    : "Dados da Pessoa Jurídica"}
                 </Heading>
-                {values.tipo === 'pf' ? <PessoaFisicaForm /> : <PessoaJuridicaForm />}
+                {formik.values.tipo === "pf" ? <PessoaFisicaForm /> : <PessoaJuridicaForm />}
               </Box>
             )}
 
@@ -228,17 +175,30 @@ const PrestadorForm = () => {
                 </Heading>
                 <VStack align="start" spacing={4}>
                   <Box p={4} bg="gray.100" borderRadius="md" width="full">
-                    <Text><strong>Nome:</strong> {values.nome}</Text>
-                    <Text><strong>Tipo:</strong> {values.tipo === 'pf' ? 'Pessoa Física' : 'Pessoa Jurídica'}</Text>
-                    <Text><strong>Documento:</strong> {values.documento}</Text>
-                    <Text><strong>Email:</strong> {values.email}</Text>
+                    <Text>
+                      <strong>Nome:</strong> {formik.values.nome}
+                    </Text>
+                    <Text>
+                      <strong>Tipo:</strong>{" "}
+                      {formik.values.tipo === "pf" ? "Pessoa Física" : "Pessoa Jurídica"}
+                    </Text>
+                    <Text>
+                      <strong>Documento:</strong> {formik.values.documento}
+                    </Text>
+                    <Text>
+                      <strong>Email:</strong> {formik.values.email}
+                    </Text>
                     {/* Adicione outros campos conforme necessário */}
                   </Box>
-                  <FormControl isInvalid={errors.confirmacao && touched.confirmacao}>
+                  <FormControl
+                    isInvalid={
+                      getIn(formik.errors.confirmacao) && getIn(formik.touched.confirmacao)
+                    }
+                  >
                     <Field as={Checkbox} id="confirmacao" name="confirmacao">
                       Confirmo que os dados acima estão corretos.
                     </Field>
-                    <FormErrorMessage>{errors.confirmacao}</FormErrorMessage>
+                    <FormErrorMessage>{getIn(formik.errors, "confirmacao") || ""}</FormErrorMessage>
                   </FormControl>
                 </VStack>
               </Box>
@@ -256,55 +216,14 @@ const PrestadorForm = () => {
               </Button>
 
               {step < 5 && (
-                <Button
-                  onClick={async () => {
-                    const formErrors = await validateForm();
-                    // Filtrar erros da etapa atual
-                    const currentErrors = Object.keys(formErrors).filter((key) => {
-                      if (step === 1)
-                        return ['nome', 'tipo', 'documento', 'email'].includes(key);
-                      if (step === 2)
-                        return key.startsWith('endereco.');
-                      if (step === 3)
-                        return key.startsWith('dadosBancarios.');
-                      if (step === 4)
-                        return key.startsWith('pessoaFisica.') || key.startsWith('pessoaJuridica.');
-                      return false;
-                    });
-
-                    if (currentErrors.length === 0) {
-                      handleNext();
-                    } else {
-                      // Marcar todos os campos da etapa atual como tocados para exibir erros
-                      Object.keys(formErrors).forEach((field) => {
-                        if (
-                          (step === 1 &&
-                            ['nome', 'tipo', 'documento', 'email'].includes(field)) ||
-                          (step === 2 && field.startsWith('endereco.')) ||
-                          (step === 3 && field.startsWith('dadosBancarios.')) ||
-                          (step === 4 &&
-                            (field.startsWith('pessoaFisica.') || field.startsWith('pessoaJuridica.')))
-                        ) {
-                          touched[field] = true;
-                        }
-                      });
-                      toast({
-                        title: 'Por favor, corrija os erros antes de continuar.',
-                        status: 'error',
-                        duration: 3000,
-                        isClosable: true,
-                      });
-                    }
-                  }}
-                  colorScheme="teal"
-                >
+                <Button onClick={handleNext} colorScheme="teal">
                   Próximo
                 </Button>
               )}
 
               {step === 5 && (
-                <Button type="submit" colorScheme="teal" isLoading={isSubmitting}>
-                  {prestador ? 'Atualizar Perfil' : 'Registrar Prestador'}
+                <Button type="submit" colorScheme="teal" isLoading={formik.isSubmitting}>
+                  {prestador ? "Atualizar Perfil" : "Registrar Prestador"}
                 </Button>
               )}
             </VStack>

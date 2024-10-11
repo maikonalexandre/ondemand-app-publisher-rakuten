@@ -29,8 +29,8 @@ export const getPrestadorByUsuarioId = async (id) => {
 
 export const updatePrestador = async (id, updatedData) => {
   try {
-    const response = await api.put(`/prestadores/${id}`, updatedData);
-    const prestador = response.data;
+    const response = await api.patch(`/prestadores/${id}`, updatedData);
+    const prestador = response.data.prestador;
 
     return prestador;
   } catch (error) {
