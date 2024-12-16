@@ -88,88 +88,90 @@ export const ResetPasswordDialog = () => {
           Alterar senha <LockKeyhole />
         </button>
       </DialogTrigger>
-      <DialogContent className="max-w-[390px] rounded-lg">
-        <DialogHeader>
-          <DialogTitle className="text-center text-lg text-brand-500">
-            Redefinir Senha
-          </DialogTitle>
-          <DialogDescription className="text-center text-base px-8">
-            Digite sua nova senha abaixo.
-          </DialogDescription>
-        </DialogHeader>
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(changePasswordMutation)}
-            className="space-y-5"
-          >
-            <FormField
-              control={form.control}
-              name="senhaAtual"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-brand-500">
-                    Senha atual *
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      type="password"
-                      className="focus-visible:ring-brand-350"
-                      placeholder="Sua senha"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="novaSenha"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-brand-500">
-                    Digite sua nova senha *
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      type="password"
-                      className="focus-visible:ring-brand-350"
-                      placeholder="Sua nova senha"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="confirmacao"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-brand-500">
-                    Confirme sua nova senha *
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      type="password"
-                      className="focus-visible:ring-brand-350"
-                      placeholder="Confirme sua nova senha"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button
-              className="w-full font-semibold bg-sky-500 hover:bg-sky-600"
-              type="submit"
+      <DialogContent className="max-w-[390px] rounded-lg px-1 border-none bg-transparent">
+        <div className="bg-white rounded-lg p-4">
+          <DialogHeader>
+            <DialogTitle className="text-center text-lg text-brand-500">
+              Redefinir Senha
+            </DialogTitle>
+            <DialogDescription className="text-center text-base px-8">
+              Digite sua nova senha abaixo.
+            </DialogDescription>
+          </DialogHeader>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(changePasswordMutation)}
+              className="space-y-5"
             >
-              Submit
-            </Button>
-          </form>
-        </Form>
+              <FormField
+                control={form.control}
+                name="senhaAtual"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-brand-500">
+                      Senha atual *
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="password"
+                        className="focus-visible:ring-brand-350"
+                        placeholder="Sua senha"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="novaSenha"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-brand-500">
+                      Digite sua nova senha *
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="password"
+                        className="focus-visible:ring-brand-350"
+                        placeholder="Sua nova senha"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="confirmacao"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-brand-500">
+                      Confirme sua nova senha *
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="password"
+                        className="focus-visible:ring-brand-350"
+                        placeholder="Confirme sua nova senha"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button
+                className="w-full font-semibold bg-sky-500 hover:bg-sky-600"
+                type="submit"
+              >
+                Submit
+              </Button>
+            </form>
+          </Form>
+        </div>
       </DialogContent>
     </Dialog>
   );

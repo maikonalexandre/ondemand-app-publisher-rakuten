@@ -12,7 +12,7 @@ import { ForgetPasswordDialog } from "./dialog";
 
 export const Login = () => {
   return (
-    <Card className="w-[390px] py-4">
+    <Card className="max-w-[390px] py-4">
       <CardHeader className="flex items-center space-y-2.5">
         <CardTitle className="text-brand-400 text-xs font-semibold  text-center">
           Central do publisher

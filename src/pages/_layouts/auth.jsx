@@ -8,7 +8,7 @@ export const AuthLayout = () => {
   if (user && !isLoading && user.tipo === "prestador") {
     return (
       <div className="w-screen h-screen bg-brand-25 flex justify-center">
-        <div className="max-w-[390px]">
+        <div className="max-w-[390px] px-1">
           <Outlet />
         </div>
       </div>

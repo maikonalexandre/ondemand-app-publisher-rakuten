@@ -62,47 +62,51 @@ export const ForgetPasswordDialog = () => {
           Esqueci minha senha
         </a>
       </DialogTrigger>
-      <DialogContent className="max-w-[390px] rounded-lg">
-        <DialogHeader>
-          <DialogTitle className="text-center text-lg text-brand-500">
-            Recuperação de Senha
-          </DialogTitle>
-          <DialogDescription className="text-center text-base px-8">
-            Informe o e-mail associado à sua conta. Você receberá um link para
-            redefinir sua senha.
-          </DialogDescription>
-        </DialogHeader>
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(ForgetPasswordMutation)}
-            className="space-y-5"
-          >
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-brand-500">Seu email *</FormLabel>
-                  <FormControl>
-                    <Input
-                      className="focus-visible:ring-brand-350"
-                      placeholder="Seu email"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button
-              disabled={isPending}
-              className="w-full font-semibold bg-sky-500 hover:bg-sky-600"
-              type="submit"
+      <DialogContent className="max-w-[390px] rounded-lg px-1 border-none bg-transparent">
+        <div className="bg-white rounded-lg p-4">
+          <DialogHeader>
+            <DialogTitle className="text-center text-lg text-brand-500">
+              Recuperação de Senha
+            </DialogTitle>
+            <DialogDescription className="text-center text-base px-8">
+              Informe o e-mail associado à sua conta. Você receberá um link para
+              redefinir sua senha.
+            </DialogDescription>
+          </DialogHeader>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(ForgetPasswordMutation)}
+              className="space-y-5"
             >
-              Submit
-            </Button>
-          </form>
-        </Form>
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-brand-500">
+                      Seu email *
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        className="focus-visible:ring-brand-350"
+                        placeholder="Seu email"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button
+                disabled={isPending}
+                className="w-full font-semibold bg-sky-500 hover:bg-sky-600"
+                type="submit"
+              >
+                Submit
+              </Button>
+            </form>
+          </Form>
+        </div>
       </DialogContent>
     </Dialog>
   );
